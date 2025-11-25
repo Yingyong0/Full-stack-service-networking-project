@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医院预约和挂号系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 医院预约和挂号系统</h1>
+            <p>基于 Java HTTP/1.1 的全栈服务</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="showTab('patients', event)">患者管理</button>
+            <button class="tab-btn" onclick="showTab('doctors', event)">医生信息</button>
+            <button class="tab-btn" onclick="showTab('appointments', event)">预约管理</button>
+            <button class="tab-btn" onclick="showTab('registrations', event)">挂号管理</button>
+        </nav>
+
+        <!-- 患者管理 -->
+        <div id="patients" class="tab-content active">
+            <h2>患者管理</h2>
+            <div class="form-section">
+                <h3>注册新患者</h3>
+                <form id="patientForm" onsubmit="registerPatient(event)">
+                    <div class="form-group">
+                        <label>姓名:</label>
+                        <input type="text" id="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>手机号:</label>
+                        <input type="tel" id="patientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>身份证号:</label>
+                        <input type="text" id="patientIdCard" required>
+                    </div>
+                    <div class="form-group">
+                        <label>性别:</label>
+                        <select id="patientGender" required>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>年龄:</label>
+                        <input type="number" id="patientAge" min="0" max="150" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">注册患者</button>
+                </form>
+            </div>
+            <div class="list-section">
+                <h3>患者列表</h3>
+                <button class="btn btn-secondary" onclick="loadPatients()">刷新列表</button>
+                <div id="patientList"></div>
+            </div>
+        </div>
+
+        <!-- 医生信息 -->
+        <div id="doctors" class="tab-content">
+            <h2>医生信息</h2>
+            <button class="btn btn-secondary" onclick="loadDoctors()">刷新列表</button>
+            <div id="doctorList" class="doctor-grid"></div>
+        </div>
+
+        <!-- 预约管理 -->
+        <div id="appointments" class="tab-content">
+            <h2>预约管理</h2>
+            <div class="form-section">
+                <h3>创建预约</h3>
+                <form id="appointmentForm" onsubmit="createAppointment(event)">
+                    <div class="form-group">
+                        <label>患者ID:</label>
+                        <input type="text" id="appointmentPatientId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>医生ID:</label>
+                        <input type="text" id="appointmentDoctorId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>预约日期:</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>预约时间:</label>
+                        <input type="time" id="appointmentTime" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">创建预约</button>
+                </form>
+            </div>
+            <div class="list-section">
+                <h3>预约列表</h3>
+                <button class="btn btn-secondary" onclick="loadAppointments()">刷新列表</button>
+                <div id="appointmentList"></div>
+            </div>
+        </div>
+
+        <!-- 挂号管理 -->
+        <div id="registrations" class="tab-content">
+            <h2>挂号管理</h2>
+            <div class="form-section">
+                <h3>创建挂号</h3>
+                <form id="registrationForm" onsubmit="createRegistration(event)">
+                    <div class="form-group">
+                        <label>患者ID:</label>
+                        <input type="text" id="registrationPatientId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>医生ID:</label>
+                        <input type="text" id="registrationDoctorId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>就诊日期:</label>
+                        <input type="date" id="visitDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>就诊时间:</label>
+                        <input type="time" id="visitTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>挂号费:</label>
+                        <input type="number" id="registrationFee" min="0" step="0.01" value="50" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">创建挂号</button>
+                </form>
+            </div>
+            <div class="list-section">
+                <h3>挂号记录</h3>
+                <button class="btn btn-secondary" onclick="loadRegistrations()">刷新列表</button>
+                <div id="registrationList"></div>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+

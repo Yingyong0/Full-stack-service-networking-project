@@ -1,0 +1,13 @@
+com\hospital\handler\StaticFileHandler.class
+com\hospital\handler\DoctorHandler.class
+com\hospital\handler\RegistrationHandler.class
+com\hospital\handler\BaseHttpHandler.class
+com\hospital\model\Doctor.class
+com\hospital\model\Patient.class
+com\hospital\model\Registration.class
+com\hospital\handler\PatientHandler.class
+com\hospital\util\JsonUtil.class
+com\hospital\handler\AppointmentHandler.class
+com\hospital\model\Appointment.class
+com\hospital\server\HospitalServer.class
+com\hospital\util\DataManager.class
