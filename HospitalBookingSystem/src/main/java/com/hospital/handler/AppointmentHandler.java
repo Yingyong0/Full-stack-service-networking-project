@@ -6,7 +6,7 @@ import com.hospital.util.JsonUtil;
 import java.io.IOException;
 
 /**
- * 预约管理处理器
+ * Appointment Management Handler
  */
 public class AppointmentHandler extends BaseHttpHandler {
     @Override
@@ -21,7 +21,7 @@ public class AppointmentHandler extends BaseHttpHandler {
             if (appointment != null) {
                 sendJsonResponse(exchange, 200, appointment);
             } else {
-                sendError(exchange, 404, "预约不存在");
+                sendError(exchange, 404, "Appointment does not exist");
             }
         } else {
             // GET /api/appointments
@@ -35,14 +35,14 @@ public class AppointmentHandler extends BaseHttpHandler {
         String requestBody = readRequestBody(exchange);
         Appointment appointment = JsonUtil.fromJson(requestBody, Appointment.class);
         
-        // 验证患者和医生是否存在
+        // Verify patient and doctor exist
         if (dataManager.getPatient(appointment.getPatientId()) == null) {
-            sendError(exchange, 400, "患者不存在");
+            sendError(exchange, 400, "Patient does not exist");
             return;
         }
         
         if (dataManager.getDoctor(appointment.getDoctorId()) == null) {
-            sendError(exchange, 400, "医生不存在");
+            sendError(exchange, 400, "Doctor does not exist");
             return;
         }
         
@@ -62,10 +62,10 @@ public class AppointmentHandler extends BaseHttpHandler {
                 Appointment appointment = dataManager.getAppointment(appointmentId);
                 sendJsonResponse(exchange, 200, appointment);
             } else {
-                sendError(exchange, 404, "预约不存在");
+                sendError(exchange, 404, "Appointment does not exist");
             }
         } else {
-            sendError(exchange, 400, "无效的请求路径");
+            sendError(exchange, 400, "Invalid request path");
         }
     }
 }

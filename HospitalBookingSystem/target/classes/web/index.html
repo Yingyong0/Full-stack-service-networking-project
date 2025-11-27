@@ -1,135 +1,136 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医院预约和挂号系统</title>
+    <title>Hospital Appointment and Registration System</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🏥 医院预约和挂号系统</h1>
-            <p>基于 Java HTTP/1.1 的全栈服务</p>
+            <h1>🏥 Hospital Appointment and Registration System</h1>
+            <p>Full-Stack Service Based on Java HTTP/1.1</p>
         </header>
 
         <nav class="tabs">
-            <button class="tab-btn active" onclick="showTab('patients', event)">患者管理</button>
-            <button class="tab-btn" onclick="showTab('doctors', event)">医生信息</button>
-            <button class="tab-btn" onclick="showTab('appointments', event)">预约管理</button>
-            <button class="tab-btn" onclick="showTab('registrations', event)">挂号管理</button>
+            <button class="tab-btn active" onclick="showTab('patients', event)">Patient Management</button>
+            <button class="tab-btn" onclick="showTab('doctors', event)">Doctor Information</button>
+            <button class="tab-btn" onclick="showTab('appointments', event)">Appointment Management</button>
+            <button class="tab-btn" onclick="showTab('registrations', event)">Registration Management</button>
         </nav>
 
-        <!-- 患者管理 -->
+        <!-- Patient Management -->
         <div id="patients" class="tab-content active">
-            <h2>患者管理</h2>
+            <h2>Patient Management</h2>
             <div class="form-section">
-                <h3>注册新患者</h3>
+                <h3>Register New Patient</h3>
                 <form id="patientForm" onsubmit="registerPatient(event)">
                     <div class="form-group">
-                        <label>姓名:</label>
-                        <input type="text" id="patientName" required>
+                        <label>Name:</label>
+                        <input type="text" id="patientName" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>手机号:</label>
-                        <input type="tel" id="patientPhone" required>
+                        <label>Phone Number:</label>
+                        <input type="tel" id="patientPhone" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>身份证号:</label>
-                        <input type="text" id="patientIdCard" required>
+                        <label>ID Card Number:</label>
+                        <input type="text" id="patientIdCard" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>性别:</label>
+                        <label>Gender:</label>
                         <select id="patientGender" required>
-                            <option value="男">男</option>
-                            <option value="女">女</option>
+                            <option value="">Please select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>年龄:</label>
-                        <input type="number" id="patientAge" min="0" max="150" required>
+                        <label>Age:</label>
+                        <input type="number" id="patientAge" min="0" max="150" placeholder="Please fill in this field" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">注册患者</button>
+                    <button type="submit" class="btn btn-primary">Register Patient</button>
                 </form>
             </div>
             <div class="list-section">
-                <h3>患者列表</h3>
-                <button class="btn btn-secondary" onclick="loadPatients()">刷新列表</button>
+                <h3>Patient List</h3>
+                <button class="btn btn-secondary" onclick="loadPatients()">Refresh List</button>
                 <div id="patientList"></div>
             </div>
         </div>
 
-        <!-- 医生信息 -->
+        <!-- Doctor Information -->
         <div id="doctors" class="tab-content">
-            <h2>医生信息</h2>
-            <button class="btn btn-secondary" onclick="loadDoctors()">刷新列表</button>
+            <h2>Doctor Information</h2>
+            <button class="btn btn-secondary" onclick="loadDoctors()">Refresh List</button>
             <div id="doctorList" class="doctor-grid"></div>
         </div>
 
-        <!-- 预约管理 -->
+        <!-- Appointment Management -->
         <div id="appointments" class="tab-content">
-            <h2>预约管理</h2>
+            <h2>Appointment Management</h2>
             <div class="form-section">
-                <h3>创建预约</h3>
+                <h3>Create Appointment</h3>
                 <form id="appointmentForm" onsubmit="createAppointment(event)">
                     <div class="form-group">
-                        <label>患者ID:</label>
-                        <input type="text" id="appointmentPatientId" required>
+                        <label>Patient ID:</label>
+                        <input type="text" id="appointmentPatientId" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>医生ID:</label>
-                        <input type="text" id="appointmentDoctorId" required>
+                        <label>Doctor ID:</label>
+                        <input type="text" id="appointmentDoctorId" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>预约日期:</label>
-                        <input type="date" id="appointmentDate" required>
+                        <label>Appointment Date:</label>
+                        <input type="date" id="appointmentDate" lang="en" required>
                     </div>
                     <div class="form-group">
-                        <label>预约时间:</label>
+                        <label>Appointment Time:</label>
                         <input type="time" id="appointmentTime" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">创建预约</button>
+                    <button type="submit" class="btn btn-primary">Create Appointment</button>
                 </form>
             </div>
             <div class="list-section">
-                <h3>预约列表</h3>
-                <button class="btn btn-secondary" onclick="loadAppointments()">刷新列表</button>
+                <h3>Appointment List</h3>
+                <button class="btn btn-secondary" onclick="loadAppointments()">Refresh List</button>
                 <div id="appointmentList"></div>
             </div>
         </div>
 
-        <!-- 挂号管理 -->
+        <!-- Registration Management -->
         <div id="registrations" class="tab-content">
-            <h2>挂号管理</h2>
+            <h2>Registration Management</h2>
             <div class="form-section">
-                <h3>创建挂号</h3>
+                <h3>Create Registration</h3>
                 <form id="registrationForm" onsubmit="createRegistration(event)">
                     <div class="form-group">
-                        <label>患者ID:</label>
-                        <input type="text" id="registrationPatientId" required>
+                        <label>Patient ID:</label>
+                        <input type="text" id="registrationPatientId" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>医生ID:</label>
-                        <input type="text" id="registrationDoctorId" required>
+                        <label>Doctor ID:</label>
+                        <input type="text" id="registrationDoctorId" placeholder="Please fill in this field" required>
                     </div>
                     <div class="form-group">
-                        <label>就诊日期:</label>
-                        <input type="date" id="visitDate" required>
+                        <label>Visit Date:</label>
+                        <input type="date" id="visitDate" lang="en" required>
                     </div>
                     <div class="form-group">
-                        <label>就诊时间:</label>
+                        <label>Visit Time:</label>
                         <input type="time" id="visitTime" required>
                     </div>
                     <div class="form-group">
-                        <label>挂号费:</label>
-                        <input type="number" id="registrationFee" min="0" step="0.01" value="50" required>
+                        <label>Registration Fee:</label>
+                        <input type="number" id="registrationFee" min="0" step="0.01" value="50" placeholder="Please fill in this field" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">创建挂号</button>
+                    <button type="submit" class="btn btn-primary">Create Registration</button>
                 </form>
             </div>
             <div class="list-section">
-                <h3>挂号记录</h3>
-                <button class="btn btn-secondary" onclick="loadRegistrations()">刷新列表</button>
+                <h3>Registration Records</h3>
+                <button class="btn btn-secondary" onclick="loadRegistrations()">Refresh List</button>
                 <div id="registrationList"></div>
             </div>
         </div>

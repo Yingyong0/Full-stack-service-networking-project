@@ -10,8 +10,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Hospital Booking System</name>
-    <description>医院预约和挂号系统 - 基于Java HTTP/1.1的全栈服务</description>
+    <description>Hospital Appointment and Registration System - Full-stack service based on Java HTTP/1.1</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,7 +20,7 @@
     </properties>
 
     <dependencies>
-        <!-- JSON处理库 -->
+        <!-- JSON Processing Library -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -42,16 +41,13 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-exec-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <mainClass>com.hospital.server.HospitalServer</mainClass>
-                    <classpathScope>compile</classpathScope>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 </project>
-
-

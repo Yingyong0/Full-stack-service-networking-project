@@ -1,7 +1,7 @@
 package com.hospital.model;
 
 /**
- * 患者模型
+ * Patient Model
  */
 public class Patient {
     private String id;

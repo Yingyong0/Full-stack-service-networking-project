@@ -1,8 +1,8 @@
-# 医院预约和挂号系统
+# Hospital Appointment and Registration System
 
-基于 Java + HTTP/1.1 实现的全栈服务项目
+Full-stack service project implemented using Java + HTTP/1.1
 
-## 项目结构
+## Project Structure
 
 ```
 HospitalBookingSystem/
@@ -10,72 +10,72 @@ HospitalBookingSystem/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/hospital/
-│   │   │       ├── server/          # HTTP服务器
-│   │   │       ├── model/           # 数据模型
-│   │   │       ├── handler/         # HTTP处理器
-│   │   │       └── util/            # 工具类
+│   │   │       ├── server/          # HTTP Server
+│   │   │       ├── model/           # Data Models
+│   │   │       ├── handler/         # HTTP Handlers
+│   │   │       └── util/            # Utility Classes
 │   │   └── resources/
-│   │       └── web/                 # 前端静态文件
+│   │       └── web/                 # Frontend Static Files
 │   └── test/
 └── pom.xml
 ```
 
-## 功能特性
+## Features
 
-- 患者管理（注册、查询）
-- 医生管理（信息查询）
-- 预约管理（创建、查询、取消预约）
-- 挂号管理（挂号、查询挂号记录）
-- RESTful API接口
-- 前端Web界面
+- Patient Management (Registration, Query)
+- Doctor Management (Information Query)
+- Appointment Management (Create, Query, Cancel Appointments)
+- Registration Management (Registration, Query Registration Records)
+- RESTful API Interface
+- Frontend Web Interface
 
-## 技术栈
+## Technology Stack
 
 - Java 11+
-- HTTP/1.1（Java原生HttpServer）
-- JSON（Gson）
-- HTML/CSS/JavaScript（前端）
+- HTTP/1.1 (Java Native HttpServer)
+- JSON (Gson)
+- HTML/CSS/JavaScript (Frontend)
 
-## 运行方式
+## How to Run
 
-### 编译项目
+### Compile Project
 ```bash
 mvn clean compile
 ```
 
-### 运行服务器
+### Run Server
 ```bash
 mvn exec:java
 ```
 
-服务器将在 `http://localhost:8080` 启动
+The server will start at `http://localhost:8080`
 
-### 访问前端
-在浏览器中打开 `http://localhost:8080/index.html`
+### Access Frontend
+Open `http://localhost:8080/index.html` in your browser
 
-## API接口
+## API Endpoints
 
-### 患者相关
-- `GET /api/patients/{id}` - 查询患者信息
-- `POST /api/patients` - 注册新患者
+### Patient Related
+- `GET /api/patients/{id}` - Query patient information
+- `POST /api/patients` - Register new patient
 
-### 医生相关
-- `GET /api/doctors` - 获取所有医生列表
-- `GET /api/doctors/{id}` - 查询医生信息
+### Doctor Related
+- `GET /api/doctors` - Get all doctors list
+- `GET /api/doctors/{id}` - Query doctor information
 
-### 预约相关
-- `GET /api/appointments` - 获取所有预约
-- `GET /api/appointments/{id}` - 查询预约信息
-- `POST /api/appointments` - 创建预约
-- `DELETE /api/appointments/{id}` - 取消预约
+### Appointment Related
+- `GET /api/appointments` - Get all appointments
+- `GET /api/appointments/{id}` - Query appointment information
+- `POST /api/appointments` - Create appointment
+- `DELETE /api/appointments/{id}` - Cancel appointment
 
-### 挂号相关
-- `GET /api/registrations` - 获取所有挂号记录
-- `GET /api/registrations/{id}` - 查询挂号信息
-- `POST /api/registrations` - 创建挂号
+### Registration Related
+- `GET /api/registrations` - Get all registration records
+- `GET /api/registrations/{id}` - Query registration information
+- `POST /api/registrations` - Create registration
 
-## 开发说明
+## Development Notes
 
-本项目使用Java原生的`com.sun.net.httpserver.HttpServer`实现HTTP/1.1服务器，不依赖任何Web框架，完全基于HTTP标准协议。
+This project uses Java's native `com.sun.net.httpserver.HttpServer` to implement HTTP/1.1 server, without relying on any web framework, completely based on HTTP standard protocol.
 
 

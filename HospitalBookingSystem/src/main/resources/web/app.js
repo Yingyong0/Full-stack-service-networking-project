@@ -1,6 +1,6 @@
 const API_BASE = 'http://localhost:8080/api';
 
-// 显示消息
+// Show message
 function showMessage(text, type = 'info') {
     const messageEl = document.getElementById('message');
     messageEl.textContent = text;
@@ -11,36 +11,36 @@ function showMessage(text, type = 'info') {
     }, 3000);
 }
 
-// 切换标签页
+// Switch tabs
 function showTab(tabName, event) {
-    // 隐藏所有标签内容
+    // Hide all tab content
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
     
-    // 移除所有按钮的活动状态
+    // Remove active state from all buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     
-    // 显示选中的标签内容
+    // Show selected tab content
     document.getElementById(tabName).classList.add('active');
     
-    // 激活对应的按钮
+    // Activate corresponding button
     if (event && event.target) {
         event.target.classList.add('active');
     } else {
-        // 如果没有事件对象，通过按钮文本查找
+        // If no event object, find by button text
         document.querySelectorAll('.tab-btn').forEach(btn => {
-            if (btn.textContent.includes(tabName === 'patients' ? '患者' : 
-                                          tabName === 'doctors' ? '医生' : 
-                                          tabName === 'appointments' ? '预约' : '挂号')) {
+            if (btn.textContent.includes(tabName === 'patients' ? 'Patient' : 
+                                          tabName === 'doctors' ? 'Doctor' : 
+                                          tabName === 'appointments' ? 'Appointment' : 'Registration')) {
                 btn.classList.add('active');
             }
         });
     }
     
-    // 加载对应标签的数据
+    // Load data for corresponding tab
     if (tabName === 'doctors') {
         loadDoctors();
     } else if (tabName === 'patients') {
@@ -52,7 +52,7 @@ function showTab(tabName, event) {
     }
 }
 
-// ============ 患者管理 ============
+// ============ Patient Management ============
 async function registerPatient(event) {
     event.preventDefault();
     
@@ -76,14 +76,14 @@ async function registerPatient(event) {
         const data = await response.json();
         
         if (response.ok) {
-            showMessage(`患者注册成功！患者ID: ${data.id}`, 'success');
+            showMessage(`Patient registered successfully! Patient ID: ${data.id}`, 'success');
             document.getElementById('patientForm').reset();
             loadPatients();
         } else {
-            showMessage(data.error || '注册失败', 'error');
+            showMessage(data.error || 'Registration failed', 'error');
         }
     } catch (error) {
-        showMessage('网络错误: ' + error.message, 'error');
+        showMessage('Network error: ' + error.message, 'error');
     }
 }
 
@@ -94,25 +94,25 @@ async function loadPatients() {
         
         const listEl = document.getElementById('patientList');
         if (patients.length === 0) {
-            listEl.innerHTML = '<p>暂无患者数据</p>';
+            listEl.innerHTML = '<p>No patient data available</p>';
             return;
         }
         
         listEl.innerHTML = patients.map(patient => `
             <div class="item-card">
                 <h4>${patient.name} (ID: ${patient.id})</h4>
-                <p><strong>手机号:</strong> ${patient.phone}</p>
-                <p><strong>身份证:</strong> ${patient.idCard}</p>
-                <p><strong>性别:</strong> ${patient.gender}</p>
-                <p><strong>年龄:</strong> ${patient.age}</p>
+                <p><strong>Phone:</strong> ${patient.phone}</p>
+                <p><strong>ID Card:</strong> ${patient.idCard}</p>
+                <p><strong>Gender:</strong> ${patient.gender}</p>
+                <p><strong>Age:</strong> ${patient.age}</p>
             </div>
         `).join('');
     } catch (error) {
-        showMessage('加载患者列表失败: ' + error.message, 'error');
+        showMessage('Failed to load patient list: ' + error.message, 'error');
     }
 }
 
-// ============ 医生管理 ============
+// ============ Doctor Management ============
 async function loadDoctors() {
     try {
         const response = await fetch(`${API_BASE}/doctors`);
@@ -120,32 +120,32 @@ async function loadDoctors() {
         
         const listEl = document.getElementById('doctorList');
         if (doctors.length === 0) {
-            listEl.innerHTML = '<p>暂无医生数据</p>';
+            listEl.innerHTML = '<p>No doctor data available</p>';
             return;
         }
         
         listEl.innerHTML = doctors.map(doctor => `
             <div class="doctor-card">
                 <h4>${doctor.name} (${doctor.title})</h4>
-                <p><strong>科室:</strong> ${doctor.department}</p>
-                <p><strong>医生ID:</strong> ${doctor.id}</p>
-                <p><strong>联系电话:</strong> ${doctor.phone}</p>
-                <p><strong>工作时间:</strong> ${doctor.schedule}</p>
+                <p><strong>Department:</strong> ${doctor.department}</p>
+                <p><strong>Doctor ID:</strong> ${doctor.id}</p>
+                <p><strong>Phone:</strong> ${doctor.phone}</p>
+                <p><strong>Schedule:</strong> ${doctor.schedule}</p>
             </div>
         `).join('');
     } catch (error) {
-        showMessage('加载医生列表失败: ' + error.message, 'error');
+        showMessage('Failed to load doctor list: ' + error.message, 'error');
     }
 }
 
-// ============ 预约管理 ============
+// ============ Appointment Management ============
 async function createAppointment(event) {
     event.preventDefault();
     
     const patientId = document.getElementById('appointmentPatientId').value;
     const doctorId = document.getElementById('appointmentDoctorId').value;
     
-    // 获取患者和医生信息
+    // Get patient and doctor information
     let patient, doctor;
     try {
         const patientRes = await fetch(`${API_BASE}/patients/${patientId}`);
@@ -155,11 +155,11 @@ async function createAppointment(event) {
         doctor = await doctorRes.json();
         
         if (!patientRes.ok || !doctorRes.ok) {
-            showMessage('患者或医生不存在', 'error');
+            showMessage('Patient or doctor does not exist', 'error');
             return;
         }
     } catch (error) {
-        showMessage('验证患者或医生信息失败: ' + error.message, 'error');
+        showMessage('Failed to verify patient or doctor information: ' + error.message, 'error');
         return;
     }
     
@@ -171,7 +171,7 @@ async function createAppointment(event) {
         department: doctor.department,
         appointmentDate: document.getElementById('appointmentDate').value,
         appointmentTime: document.getElementById('appointmentTime').value,
-        status: '待就诊'
+        status: 'Pending'
     };
     
     try {
@@ -186,14 +186,14 @@ async function createAppointment(event) {
         const data = await response.json();
         
         if (response.ok) {
-            showMessage(`预约创建成功！预约ID: ${data.id}`, 'success');
+            showMessage(`Appointment created successfully! Appointment ID: ${data.id}`, 'success');
             document.getElementById('appointmentForm').reset();
             loadAppointments();
         } else {
-            showMessage(data.error || '创建预约失败', 'error');
+            showMessage(data.error || 'Failed to create appointment', 'error');
         }
     } catch (error) {
-        showMessage('网络错误: ' + error.message, 'error');
+        showMessage('Network error: ' + error.message, 'error');
     }
 }
 
@@ -204,29 +204,29 @@ async function loadAppointments() {
         
         const listEl = document.getElementById('appointmentList');
         if (appointments.length === 0) {
-            listEl.innerHTML = '<p>暂无预约数据</p>';
+            listEl.innerHTML = '<p>No appointment data available</p>';
             return;
         }
         
         listEl.innerHTML = appointments.map(appointment => `
             <div class="item-card">
-                <h4>预约 ${appointment.id} <span class="status ${getStatusClass(appointment.status)}">${appointment.status}</span></h4>
-                <p><strong>患者:</strong> ${appointment.patientName} (${appointment.patientId})</p>
-                <p><strong>医生:</strong> ${appointment.doctorName} (${appointment.doctorId})</p>
-                <p><strong>科室:</strong> ${appointment.department}</p>
-                <p><strong>预约日期:</strong> ${appointment.appointmentDate} ${appointment.appointmentTime}</p>
-                ${appointment.status === '待就诊' ? `
-                    <button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">取消预约</button>
+                <h4>Appointment ${appointment.id} <span class="status ${getStatusClass(appointment.status)}">${appointment.status}</span></h4>
+                <p><strong>Patient:</strong> ${appointment.patientName} (${appointment.patientId})</p>
+                <p><strong>Doctor:</strong> ${appointment.doctorName} (${appointment.doctorId})</p>
+                <p><strong>Department:</strong> ${appointment.department}</p>
+                <p><strong>Appointment Date:</strong> ${appointment.appointmentDate} ${appointment.appointmentTime}</p>
+                ${appointment.status === 'Pending' ? `
+                    <button class="btn btn-danger" onclick="cancelAppointment('${appointment.id}')">Cancel Appointment</button>
                 ` : ''}
             </div>
         `).join('');
     } catch (error) {
-        showMessage('加载预约列表失败: ' + error.message, 'error');
+        showMessage('Failed to load appointment list: ' + error.message, 'error');
     }
 }
 
 async function cancelAppointment(id) {
-    if (!confirm('确定要取消这个预约吗？')) {
+    if (!confirm('Are you sure you want to cancel this appointment?')) {
         return;
     }
     
@@ -238,17 +238,17 @@ async function cancelAppointment(id) {
         const data = await response.json();
         
         if (response.ok) {
-            showMessage('预约已取消', 'success');
+            showMessage('Appointment cancelled', 'success');
             loadAppointments();
         } else {
-            showMessage(data.error || '取消预约失败', 'error');
+            showMessage(data.error || 'Failed to cancel appointment', 'error');
         }
     } catch (error) {
-        showMessage('网络错误: ' + error.message, 'error');
+        showMessage('Network error: ' + error.message, 'error');
     }
 }
 
-// ============ 挂号管理 ============
+// ============ Registration Management ============
 async function createRegistration(event) {
     event.preventDefault();
     
@@ -256,29 +256,29 @@ async function createRegistration(event) {
     const doctorId = document.getElementById('registrationDoctorId').value.trim();
     
     if (!patientId || !doctorId) {
-        showMessage('请填写患者ID和医生ID', 'error');
+        showMessage('Please fill in Patient ID and Doctor ID', 'error');
         return;
     }
     
-    // 获取患者和医生信息
+    // Get patient and doctor information
     let patient, doctor;
     try {
         const patientRes = await fetch(`${API_BASE}/patients/${patientId}`);
         if (!patientRes.ok) {
-            showMessage('患者不存在，请先注册患者', 'error');
+            showMessage('Patient does not exist, please register patient first', 'error');
             return;
         }
         patient = await patientRes.json();
         
         const doctorRes = await fetch(`${API_BASE}/doctors/${doctorId}`);
         if (!doctorRes.ok) {
-            showMessage('医生不存在', 'error');
+            showMessage('Doctor does not exist', 'error');
             return;
         }
         doctor = await doctorRes.json();
     } catch (error) {
-        showMessage('验证患者或医生信息失败: ' + error.message, 'error');
-        console.error('验证错误:', error);
+        showMessage('Failed to verify patient or doctor information: ' + error.message, 'error');
+        console.error('Verification error:', error);
         return;
     }
     
@@ -287,12 +287,12 @@ async function createRegistration(event) {
     const fee = parseFloat(document.getElementById('registrationFee').value);
     
     if (!visitDate || !visitTime) {
-        showMessage('请填写就诊日期和时间', 'error');
+        showMessage('Please fill in visit date and time', 'error');
         return;
     }
     
     if (isNaN(fee) || fee < 0) {
-        showMessage('请输入有效的挂号费', 'error');
+        showMessage('Please enter a valid registration fee', 'error');
         return;
     }
     
@@ -307,7 +307,7 @@ async function createRegistration(event) {
         registrationTime: now.toTimeString().split(' ')[0].substring(0, 5),
         visitDate: visitDate,
         visitTime: visitTime,
-        status: '待就诊',
+        status: 'Pending',
         fee: fee
     };
     
@@ -323,16 +323,16 @@ async function createRegistration(event) {
         const data = await response.json();
         
         if (response.ok) {
-            showMessage(`挂号成功！挂号ID: ${data.id}，挂号费: ¥${data.fee}`, 'success');
+            showMessage(`Registration successful! Registration ID: ${data.id}, Fee: $${data.fee}`, 'success');
             document.getElementById('registrationForm').reset();
             loadRegistrations();
         } else {
-            showMessage(data.error || '创建挂号失败', 'error');
-            console.error('创建挂号失败:', data);
+            showMessage(data.error || 'Failed to create registration', 'error');
+            console.error('Failed to create registration:', data);
         }
     } catch (error) {
-        showMessage('网络错误: ' + error.message, 'error');
-        console.error('网络错误:', error);
+        showMessage('Network error: ' + error.message, 'error');
+        console.error('Network error:', error);
     }
 }
 
@@ -343,36 +343,89 @@ async function loadRegistrations() {
         
         const listEl = document.getElementById('registrationList');
         if (registrations.length === 0) {
-            listEl.innerHTML = '<p>暂无挂号记录</p>';
+            listEl.innerHTML = '<p>No registration records available</p>';
             return;
         }
         
         listEl.innerHTML = registrations.map(registration => `
             <div class="item-card">
-                <h4>挂号 ${registration.id} <span class="status ${getStatusClass(registration.status)}">${registration.status}</span></h4>
-                <p><strong>患者:</strong> ${registration.patientName} (${registration.patientId})</p>
-                <p><strong>医生:</strong> ${registration.doctorName} (${registration.doctorId})</p>
-                <p><strong>科室:</strong> ${registration.department}</p>
-                <p><strong>挂号时间:</strong> ${registration.registrationDate} ${registration.registrationTime}</p>
-                <p><strong>就诊时间:</strong> ${registration.visitDate} ${registration.visitTime}</p>
-                <p><strong>挂号费:</strong> ¥${registration.fee.toFixed(2)}</p>
+                <h4>Registration ${registration.id} <span class="status ${getStatusClass(registration.status)}">${registration.status}</span></h4>
+                <p><strong>Patient:</strong> ${registration.patientName} (${registration.patientId})</p>
+                <p><strong>Doctor:</strong> ${registration.doctorName} (${registration.doctorId})</p>
+                <p><strong>Department:</strong> ${registration.department}</p>
+                <p><strong>Registration Time:</strong> ${registration.registrationDate} ${registration.registrationTime}</p>
+                <p><strong>Visit Time:</strong> ${registration.visitDate} ${registration.visitTime}</p>
+                <p><strong>Registration Fee:</strong> $${registration.fee.toFixed(2)}</p>
             </div>
         `).join('');
     } catch (error) {
-        showMessage('加载挂号记录失败: ' + error.message, 'error');
+        showMessage('Failed to load registration records: ' + error.message, 'error');
     }
 }
 
-// 工具函数
+// Utility functions
 function getStatusClass(status) {
-    if (status === '待就诊') return 'pending';
-    if (status === '已完成' || status === '已就诊') return 'completed';
-    if (status === '已取消') return 'cancelled';
+    if (status === 'Pending') return 'pending';
+    if (status === 'Completed' || status === 'Visited') return 'completed';
+    if (status === 'Cancelled') return 'cancelled';
     return '';
 }
 
-// 页面加载时初始化
+// Set custom validation messages in English
+function setupFormValidation() {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        const inputs = form.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+            // Set custom validation message
+            input.addEventListener('invalid', function(e) {
+                if (!e.target.validity.valid) {
+                    if (e.target.type === 'email') {
+                        e.target.setCustomValidity('Please enter a valid email address');
+                    } else if (e.target.type === 'number') {
+                        if (e.target.validity.valueMissing) {
+                            e.target.setCustomValidity('Please fill in this field');
+                        } else if (e.target.validity.rangeUnderflow) {
+                            e.target.setCustomValidity('Value is too small');
+                        } else if (e.target.validity.rangeOverflow) {
+                            e.target.setCustomValidity('Value is too large');
+                        } else {
+                            e.target.setCustomValidity('Please enter a valid number');
+                        }
+                    } else if (e.target.type === 'date') {
+                        e.target.setCustomValidity('Please select a date');
+                    } else if (e.target.type === 'time') {
+                        e.target.setCustomValidity('Please select a time');
+                    } else {
+                        e.target.setCustomValidity('Please fill in this field');
+                    }
+                }
+            });
+            
+            // Clear custom message on input
+            input.addEventListener('input', function(e) {
+                e.target.setCustomValidity('');
+            });
+        });
+        
+        // Handle select elements
+        const selects = form.querySelectorAll('select[required]');
+        selects.forEach(select => {
+            select.addEventListener('invalid', function(e) {
+                if (!e.target.validity.valid) {
+                    e.target.setCustomValidity('Please select an option');
+                }
+            });
+            select.addEventListener('change', function(e) {
+                e.target.setCustomValidity('');
+            });
+        });
+    });
+}
+
+// Initialize on page load
 window.addEventListener('load', () => {
+    setupFormValidation();
     loadDoctors();
 });
 

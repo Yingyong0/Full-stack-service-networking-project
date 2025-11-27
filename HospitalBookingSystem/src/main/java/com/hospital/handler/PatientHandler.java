@@ -6,7 +6,7 @@ import com.hospital.util.JsonUtil;
 import java.io.IOException;
 
 /**
- * 患者管理处理器
+ * Patient Management Handler
  */
 public class PatientHandler extends BaseHttpHandler {
     @Override
@@ -21,7 +21,7 @@ public class PatientHandler extends BaseHttpHandler {
             if (patient != null) {
                 sendJsonResponse(exchange, 200, patient);
             } else {
-                sendError(exchange, 404, "患者不存在");
+                sendError(exchange, 404, "Patient does not exist");
             }
         } else {
             // GET /api/patients

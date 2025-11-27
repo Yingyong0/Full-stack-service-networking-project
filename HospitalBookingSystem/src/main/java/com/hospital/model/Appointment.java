@@ -1,7 +1,7 @@
 package com.hospital.model;
 
 /**
- * 预约模型
+ * Appointment Model
  */
 public class Appointment {
     private String id;
@@ -12,7 +12,7 @@ public class Appointment {
     private String department;
     private String appointmentDate;
     private String appointmentTime;
-    private String status; // 待就诊、已完成、已取消
+    private String status; // Pending, Completed, Cancelled
 
     public Appointment() {
     }

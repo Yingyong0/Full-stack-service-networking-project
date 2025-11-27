@@ -1,7 +1,7 @@
 package com.hospital.model;
 
 /**
- * 挂号模型
+ * Registration Model
  */
 public class Registration {
     private String id;
@@ -14,7 +14,7 @@ public class Registration {
     private String registrationTime;
     private String visitDate;
     private String visitTime;
-    private String status; // 待就诊、已就诊、已取消
+    private String status; // Pending, Visited, Cancelled
     private double fee;
 
     public Registration() {

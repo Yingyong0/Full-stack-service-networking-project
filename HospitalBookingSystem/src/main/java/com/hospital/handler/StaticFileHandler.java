@@ -6,40 +6,40 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 静态文件处理器
+ * Static File Handler
  */
 public class StaticFileHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String path = exchange.getRequestURI().getPath();
         
-        // 如果路径是API路径，不应该处理（理论上不会到达这里，因为API路由已注册）
+        // If path is API path, should not handle (theoretically won't reach here as API routes are registered)
         if (path.startsWith("/api/")) {
-            sendError(exchange, 404, "API路径未找到");
+            sendError(exchange, 404, "API path not found");
             return;
         }
         
-        // 设置CORS头
+        // Set CORS headers
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         
-        // 默认首页
+        // Default homepage
         if (path.equals("/") || path.equals("/index.html")) {
             path = "/index.html";
         }
         
-        // 读取资源文件
+        // Read resource file
         InputStream resourceStream = getClass().getResourceAsStream("/web" + path);
         
         if (resourceStream == null) {
-            sendError(exchange, 404, "文件不存在: " + path);
+            sendError(exchange, 404, "File not found: " + path);
             return;
         }
         
-        // 根据文件扩展名设置Content-Type
+        // Set Content-Type based on file extension
         String contentType = getContentType(path);
         exchange.getResponseHeaders().add("Content-Type", contentType);
         
-        // 读取文件内容 - 使用兼容Java 9+的方法
+        // Read file content - using Java 9+ compatible method
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte[] data = new byte[1024];
         int nRead;

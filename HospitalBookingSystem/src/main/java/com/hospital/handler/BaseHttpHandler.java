@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
- * HTTP请求处理器基类
+ * Base HTTP Request Handler
  */
 public abstract class BaseHttpHandler implements HttpHandler {
     protected DataManager dataManager = DataManager.getInstance();
@@ -18,13 +18,13 @@ public abstract class BaseHttpHandler implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        // 设置CORS头
+        // Set CORS headers
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
         exchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
 
-        // 处理OPTIONS请求（CORS预检）
+        // Handle OPTIONS request (CORS preflight)
         if ("OPTIONS".equals(method)) {
             exchange.sendResponseHeaders(200, -1);
             exchange.close();
@@ -46,11 +46,11 @@ public abstract class BaseHttpHandler implements HttpHandler {
                     handleDelete(exchange, path);
                     break;
                 default:
-                    sendError(exchange, 405, "方法不允许");
+                    sendError(exchange, 405, "Method not allowed");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            sendError(exchange, 500, "服务器内部错误: " + e.getMessage());
+            sendError(exchange, 500, "Internal server error: " + e.getMessage());
         }
     }
 
@@ -59,11 +59,11 @@ public abstract class BaseHttpHandler implements HttpHandler {
     protected abstract void handlePost(HttpExchange exchange, String path) throws IOException;
 
     protected void handlePut(HttpExchange exchange, String path) throws IOException {
-        sendError(exchange, 405, "方法不允许");
+        sendError(exchange, 405, "Method not allowed");
     }
 
     protected void handleDelete(HttpExchange exchange, String path) throws IOException {
-        sendError(exchange, 405, "方法不允许");
+        sendError(exchange, 405, "Method not allowed");
     }
 
     protected void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {

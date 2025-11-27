@@ -5,7 +5,7 @@ import com.hospital.model.Doctor;
 import java.io.IOException;
 
 /**
- * 医生管理处理器
+ * Doctor Management Handler
  */
 public class DoctorHandler extends BaseHttpHandler {
     @Override
@@ -20,7 +20,7 @@ public class DoctorHandler extends BaseHttpHandler {
             if (doctor != null) {
                 sendJsonResponse(exchange, 200, doctor);
             } else {
-                sendError(exchange, 404, "医生不存在");
+                sendError(exchange, 404, "Doctor does not exist");
             }
         } else {
             // GET /api/doctors
@@ -30,7 +30,7 @@ public class DoctorHandler extends BaseHttpHandler {
 
     @Override
     protected void handlePost(HttpExchange exchange, String path) throws IOException {
-        sendError(exchange, 405, "方法不允许");
+        sendError(exchange, 405, "Method not allowed");
     }
 }
 

@@ -1,7 +1,7 @@
 package com.hospital.model;
 
 /**
- * 医生模型
+ * Doctor Model
  */
 public class Doctor {
     private String id;
@@ -9,7 +9,7 @@ public class Doctor {
     private String department;
     private String title;
     private String phone;
-    private String schedule; // 工作时间安排
+    private String schedule; // Work schedule
 
     public Doctor() {
     }

@@ -6,7 +6,7 @@ import com.hospital.util.JsonUtil;
 import java.io.IOException;
 
 /**
- * 挂号管理处理器
+ * Registration Management Handler
  */
 public class RegistrationHandler extends BaseHttpHandler {
     @Override
@@ -21,7 +21,7 @@ public class RegistrationHandler extends BaseHttpHandler {
             if (registration != null) {
                 sendJsonResponse(exchange, 200, registration);
             } else {
-                sendError(exchange, 404, "挂号记录不存在");
+                sendError(exchange, 404, "Registration record does not exist");
             }
         } else {
             // GET /api/registrations
@@ -35,14 +35,14 @@ public class RegistrationHandler extends BaseHttpHandler {
         String requestBody = readRequestBody(exchange);
         Registration registration = JsonUtil.fromJson(requestBody, Registration.class);
         
-        // 验证患者和医生是否存在
+        // Verify patient and doctor exist
         if (dataManager.getPatient(registration.getPatientId()) == null) {
-            sendError(exchange, 400, "患者不存在");
+            sendError(exchange, 400, "Patient does not exist");
             return;
         }
         
         if (dataManager.getDoctor(registration.getDoctorId()) == null) {
-            sendError(exchange, 400, "医生不存在");
+            sendError(exchange, 400, "Doctor does not exist");
             return;
         }
         

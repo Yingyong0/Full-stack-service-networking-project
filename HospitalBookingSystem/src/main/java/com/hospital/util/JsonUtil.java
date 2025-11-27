@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.util.stream.Collectors;
 
 /**
- * JSON工具类
+ * JSON Utility Class
  */
 public class JsonUtil {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
