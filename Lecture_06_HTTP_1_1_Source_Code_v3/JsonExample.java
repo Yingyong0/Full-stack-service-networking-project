@@ -1,22 +1,11 @@
-// Note: Gson dependency required for compilation
-// Maven: <dependency><groupId>com.google.code.gson</groupId><artifactId>gson</artifactId><version>2.10.1</version></dependency>
-// Gradle: implementation 'com.google.code.gson:gson:2.10.1'
-// Or download manually: https://mvnrepository.com/artifact/com.google.code.gson/gson
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * JSON Processing Example
- * Corresponds to Python version: lec-06-prg-03/04/05/06-json-example.py
- * 
- * Note: Gson dependency required for compilation and execution
- */
 public class JsonExample {
     
-    // Inner class representing superhero data
     static class SuperHero {
         String squadName;
         String homeTown;
@@ -36,7 +25,6 @@ public class JsonExample {
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
-        // Example 1: Read data from JSON file
         try {
             System.out.println("=== Example 1: Read from JSON file ===");
             FileReader reader = new FileReader("lec-06-prg-03-json-example.json");
@@ -50,7 +38,6 @@ public class JsonExample {
             System.err.println("Failed to read JSON file: " + e.getMessage());
         }
         
-        // Example 2: Create JSON object and write to file
         try {
             System.out.println("\n=== Example 2: Create and write JSON file ===");
             SuperHero superHeroes = createSuperHeroData();
@@ -63,13 +50,11 @@ public class JsonExample {
             System.err.println("Failed to write JSON file: " + e.getMessage());
         }
         
-        // Example 3: Convert object to JSON string
         System.out.println("\n=== Example 3: Object to JSON string ===");
         SuperHero superHeroes = createSuperHeroData();
         String jsonString = gson.toJson(superHeroes);
         System.out.println(jsonString);
         
-        // Example 4: JSON string to object
         System.out.println("\n=== Example 4: JSON string to object ===");
         SuperHero parsed = gson.fromJson(jsonString, SuperHero.class);
         System.out.println("Home Town: " + parsed.homeTown);
@@ -106,4 +91,3 @@ public class JsonExample {
         return superHeroes;
     }
 }
-

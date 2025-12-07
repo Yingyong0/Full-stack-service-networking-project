@@ -1,7 +1,3 @@
-// Note: Gson dependency required for compilation
-// Maven: <dependency><groupId>com.google.code.gson</groupId><artifactId>gson</artifactId><version>2.10.1</version></dependency>
-// Gradle: implementation 'com.google.code.gson:gson:2.10.1'
-// Or download manually: https://mvnrepository.com/artifact/com.google.code.gson/gson
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
@@ -12,12 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * REST API Server using HTTP/1.1
- * Corresponds to Python version: lec-06-prg-07-rest-server-v3.py
- * 
- * Note: Gson dependency required for JSON processing
- */
 public class RestServer {
     
     private static final Gson gson = new Gson();
@@ -28,13 +18,12 @@ public class RestServer {
         
         HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
         
-        // Root path - API information page
         server.createContext("/", new RootHandler());
         
-        // REST API endpoint
         server.createContext("/membership_api/", new MembershipApiHandler());
         
         server.setExecutor(null);
+        
         server.start();
         
         System.out.println("## REST API server started at http://127.0.0.1:" + port);
@@ -104,7 +93,6 @@ public class RestServer {
             String method = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
             
-            // Extract member_id
             String memberId = path.substring("/membership_api/".length());
             
             Map<String, String> response = new HashMap<>();
@@ -131,19 +119,21 @@ public class RestServer {
                     return;
             }
             
-            // Return JSON response
             String jsonResponse = gson.toJson(response);
+            
             exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+            
             exchange.sendResponseHeaders(200, jsonResponse.getBytes(StandardCharsets.UTF_8).length);
+            
             OutputStream os = exchange.getResponseBody();
             os.write(jsonResponse.getBytes(StandardCharsets.UTF_8));
+            
             os.close();
         }
         
         private String getFormValue(HttpExchange exchange, String key) throws IOException {
             InputStream is = exchange.getRequestBody();
             String body = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            // Simple form-data parsing: key=value
             String[] pairs = body.split("&");
             for (String pair : pairs) {
                 String[] kv = pair.split("=");
@@ -202,4 +192,3 @@ public class RestServer {
         }
     }
 }
-
